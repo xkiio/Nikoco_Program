@@ -1,3 +1,7 @@
+# bugs
+# no function to restart or exit program when user inputs 'n'
+# no function to invalidate blank input or input that is anything other than 'y' or ' n'
+
 import random
 from random import randint
 
@@ -29,7 +33,7 @@ def y_or_n():
     inp = input("Do you agree to these terms? (Y/N). ").lower()
     if inp == "y":
 # inputs 'y' as agreeing to terms
-        print("yas")
+        print("yes")
     elif inp == "n":
 # inputs 'n' as disagreeing to terms
         print("** I'm sorry, you must agree to these terms in order to commission the artist. **")
