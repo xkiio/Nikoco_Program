@@ -33,14 +33,17 @@ def y_or_n():
         order_type()
     elif inp == "n":
 # inputs 'n' as disagreeing to terms
-        print("")
-        print("** I'm sorry, you must agree to these terms in order to commission the artist. **")
-        print("** If you wish to restart the program, type 1 **")
-        print("** If you wish to exit the program, type 2 **")
-        print("")
+        n()
     else:
         print("Please enter either 'y' for yes, or 'n' for no.")
-        return y_or_n()
+        y_or_n()
+
+def n():
+    print("")
+    print("** I'm sorry, you must agree to these terms in order to commission the artist. **")
+    print("** If you wish to restart the program, type 1 **")
+    print("** If you wish to exit the program, type 2 **")
+    print("")
     while True:
         try:
             restart = int(input("Please enter a number: "))
@@ -63,7 +66,6 @@ def order_type():
     print ("Do you want your order to be of virtual or physical use?")
     print ("For a virtual copy, enter '1' ")
     print ("For a physical copy, enter '2' ")
-
     while True:
         try:
             virtual = int(input("Please enter a number: "))
@@ -71,7 +73,6 @@ def order_type():
                 if virtual == 1:
                     print ("Virtual")
                     break
-
                 elif virtual == 2:
                     print ("Physical")
                     break
@@ -80,7 +81,10 @@ def order_type():
         except ValueError:
             print ("That is not a valid number.")
             print ("Please enter either 1 or 2.")
-    what^^
+
+def menu():
+    print ("menu")
+
 
 def main():
     """
@@ -90,6 +94,5 @@ def main():
     """
     welcome()
     y_or_n()
-    order_type()
 
 main()
