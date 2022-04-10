@@ -94,11 +94,15 @@ def order_type():
             if virtual >= 1 and virtual <=2: # if input is equal to 1 or 2 
                 if virtual == 1: # if input is 1 follows virtual order function
                     print ("")
-                    print ("**For a virtual delivery, we would like your name, phone number, and email address where the final product will be sent! **")
+                    print ("** For a virtual delivery, we would like your name, phone number, and email address where the final product will be sent! **")
+                    print ("** It is important that your details are correct- if you have made a mistake, you can reset your details after full input. **")
                     virtual_info()
                     break
                 elif virtual == 2: # if input is 2 follows physical order function
-                    print ("Physical")
+                    print ("")
+                    print ("** For a physical delivery, we would like your name, phone number and home address where the final product will be sent! **")
+                    print ("** It is important that your details are correct- if you have made a mistake, you can reset your details after full input. **")
+                    physical_info()
                     break
             else: # if input is invalid prints error message
                 print ("The number must be either 1 or 2.")
@@ -108,21 +112,51 @@ def order_type():
 
 # virtual_info function - name, phone number and email address
 def virtual_info():
-# Basic instructions
-    question = ("Please enter your name: ")
+# basic instructions
+    print ("** Please enter the following... **")
+    question = ("Name: ") # asks for name
     customer_details['name'] = not_blank(question)
-    print(customer_details['name'])
+    #print(customer_details['name'])
 
-    question = ("Please enter your phone number: ")
+    question = ("Phone number: ") # asks for phone number
     customer_details['phone'] = not_blank(question)
-    print(customer_details['phone'])
+    #print(customer_details['phone'])
 
-    question = ("Please enter your email address: ")
+    question = ("Email address: ") # asks for email address
     customer_details['email'] = not_blank(question)
-    print(customer_details['email'])
+    #print(customer_details['email'])
 
 # physical_info function - house address and phone
+def physical_info():
+# basic instructions
+    print ("** Please enter the following... **")
+    question = ("Name: ") # asks for name
+    customer_details['name'] = not_blank(question)
+    #print(customer_details['name'])
 
+    question = ("Phone number: ") # asks for phone number
+    customer_details['phone'] = not_blank(question)
+    #print(customer_details['phone'])
+
+    question = ("House number: ") # asks for house number
+    customer_details['house'] = not_blank(question)
+    #print(customer_details['house'])
+    
+    question = ("Street name: ")
+    customer_details['street'] = not_blank(question)
+    #print(customer_details['street'])
+
+    question = ("Suburb: ")
+    customer_details['suburb'] = not_blank(question)
+    #print(customer_details['suburb'])
+
+    question = ("State/city: ")
+    customer_details['region'] = not_blank(question)
+    #print(customer_details['region'])
+
+    question = ("Postcode: ")
+    customer_details['postcode'] = not_blank(question)
+    #print(customer_details['postcode'])
 
 # nikoco commission menu
 
