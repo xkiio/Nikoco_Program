@@ -6,9 +6,17 @@
 import random
 from random import randint
 
+
 # list of names working in business
 names = ["Andy","Hunter","Joyce","Mengying","Pup","Bandi","Yuki","Niko",]
-
+# list of virtual options
+virtual_options = ['Landscape Layout','Portrait (Full body)','Portrait (Half body)','Square Canvas/Album Cover','Wallpaper- Laptop/Tablet','Wallpaper- Iphone','Character Design Ref','Profile Picture',]
+# list of physical options
+physical_options = ['Landscape Layout','Poster Style','Portrait (Full body)','Portrait (Half body)','Square Canvas/Album Cover','Character Design Collage','Iphone Case','Sticker Designs (x5)',]
+# list of virtual option prices
+virtual_prices = [150, 100, 80, 60, 50, 50, 30, 10]
+# list of physical option prices
+physical_prices = [150, 130, 100, 80, 60, 35, 15, 10]
 # customer details dictionary
 customer_details = {}
 
@@ -125,6 +133,9 @@ def virtual_info():
     question = ("Email address: ") # asks for email address
     customer_details['email'] = not_blank(question)
     #print(customer_details['email'])
+    
+    print(customer_details)
+    menu_virtual()
 
 # physical_info function - house address and phone
 def physical_info():
@@ -158,8 +169,20 @@ def physical_info():
     customer_details['postcode'] = not_blank(question)
     #print(customer_details['postcode'])
 
-# nikoco commission menu
+    print(customer_details)
+    menu_physical()
 
+# nikoco commission menu - virtual
+def menu_virtual():
+    number_options = 8
+    for count in range(number_options) :
+        print("{} {} ${:.2f}" .format(count+1, virtual_options[count],virtual_prices[count]))
+
+# nikoco commission menu - physical
+def menu_physical():
+    number_options = 8
+    for count in range(number_options) :
+        print("{} {} ${:.2f}" .format(count+1, physical_options[count],physical_prices[count]))
 
 # choose option of one or two orders - min 1, max 2
 
