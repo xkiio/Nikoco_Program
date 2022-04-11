@@ -19,27 +19,43 @@ menu_virtual()
 print("")
 
 # ask if user wishes to create another order.
-num_ordered = 0
-
 print("** Do you wish to make a second commission? **")
 print("** Making another commission will prolong the time the order takes to be delivered to you. **")
-num_ordered = int(input("If you do not, enter 1. If you do, enter 2: "))
+print("** If you do not, enter 1. If you do, enter 2: **")
+num_ordered = 0
+while True:
+    try:
+        num_ordered = int(input(""))
+        if num_ordered >= 1 and num_ordered <= 2:
+            break
+        else:
+            print("Im sorry, your amount of commissions is limited to 2.")
+    except ValueError:
+        print ("That is not a valid number.")
+        print ("Please enter either 1 or 2:")
 
-print(num_ordered)
-
-#Choose options from menu
-print ("Please enter the following commissions you want by entering its number from the menu- ")
+# choose options from menu
+print ("** Enter the following commission you want by entering its following number from the menu: **")
 for item in range(num_ordered):
     if num_ordered > 0  :
-        commissions_ordered = int(input())
+        while True:
+            try:
+                commissions_ordered = int(input(""))
+                if commissions_ordered >=1 and commissions_ordered <=8:
+                    break
+                else:
+                    print ("Your order must be chosen out of the 8 options- please enter a number between 1-8: ")
+            except ValueError:
+                print ("That is not a valid number.")
+                print ("Please enter a number between 1-8.")
+        commissions_ordered = commissions_ordered -1
         order_list.append(virtual_options[commissions_ordered])
         order_cost.append(virtual_prices[commissions_ordered])
+        print("{} ${:.2f}" .format(virtual_options[commissions_ordered],virtual_prices[commissions_ordered]))
         num_ordered = num_ordered - 1          
 
 print(order_list)
 print(order_cost)
-
-# i want to make it so that the user is only limited to two orders, so their only optional input would be either 1 or 2. edit later.
             
 
 
