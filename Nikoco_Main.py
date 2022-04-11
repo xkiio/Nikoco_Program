@@ -58,19 +58,24 @@ def welcome():
     print(" - Twos orders maximum for one user regardless of work size")
     print(" Orders that break the following conditions will be refunded.")
     print("")
+    y_or_n()
 
 # yes or no condition funtion input
 def y_or_n():
-    inp = input("Do you agree to these terms? (Y/N). ").lower() # asks for input automatically set to lower case.
-    if inp == "y": # if input entered is y print following message
-# inputs 'y' as agreeing to terms
-        print("** Perfect! **")
-        order_type() # sends user to order_type function
-    elif inp == "n": # if input entered is n sends user to n function
-        n()
-    else: # if input is invalided that is not y or n prints error message and loops
-        print("Please enter either 'y' for yes, or 'n' for no.")
-        y_or_n()
+    while True:
+        try:
+            inp = input("Do you agree to these terms? (Y/N). ").lower() # asks for input automatically set to lower case.
+            if inp == "y": # if input entered is y print following message
+            # inputs 'y' as agreeing to terms
+                print("** Perfect! **")
+                break #sends user to continue main function process
+            elif inp == "n": # if input entered is n sends user to n function
+                n()
+            else: # if input is invalided that is not y or n prints error message and loops
+                print("Please enter either 'y' for yes, or 'n' for no.")
+        except ValueError:
+            print("That is not a valid answer.")
+            print("Please enter either 'y' for yes, or 'n' for no.")
 
 # n function if user inputs n for conditions
 def n():
@@ -98,6 +103,7 @@ def n():
 
 # order_type function and printing instructions
 def order_type():
+    p_v = ""
     print("")
     print ("** Do you want your order to be of virtual or physical use? **")
     print ("** For a virtual copy, enter '1' **")
@@ -111,18 +117,21 @@ def order_type():
                     print ("** For a virtual delivery, we would like your name, phone number, and email address where the final product will be sent! **")
                     print ("** It is important that your details are correct- if you have made a mistake, you can reset your details after full input. **")
                     virtual_info()
+                    p_v = "virtual"
                     break
                 elif virtual == 2: # if input is 2 follows physical order function
                     print ("")
                     print ("** For a physical delivery, we would like your name, phone number and home address where the final product will be sent! **")
                     print ("** It is important that your details are correct- if you have made a mistake, you can reset your details after full input. **")
                     physical_info()
+                    p_v = "physical"
                     break
             else: # if input is invalid prints error message
                 print ("The number must be either 1 or 2.")
         except ValueError: # if input is blank or an invalid character prints error message
             print ("That is not a valid number.")
             print ("Please enter either 1 or 2.")
+    return p_v
 
 # virtual_info function - name, phone number and email address
 def virtual_info():
@@ -139,10 +148,7 @@ def virtual_info():
     question = ("Email address: ") # asks for email address
     customer_details['email'] = not_blank(question)
     #print(customer_details['email'])
-    
-    print(customer_details)
     print("")
-    menu_virtual()
 
 # physical_info function - house address and phone
 def physical_info():
@@ -175,10 +181,13 @@ def physical_info():
     question = ("Postcode: ")
     customer_details['postcode'] = not_blank(question)
     #print(customer_details['postcode'])
-
-    print(customer_details)
     print("")
-    menu_physical()
+
+def menu(p_v):
+    if p_v == "virtual":
+        menu_virtual()
+    if p_v == "physical":
+        menu_physical()
 
 # nikoco commission menu - virtual
 def menu_virtual():
@@ -192,6 +201,7 @@ def menu_virtual():
     print("** If you do not, enter 1. If you do, enter 2: **")
     num_ordered = 0
 
+# choose option of one or two orders - min 1, max 2
     while True:
         try:
             num_ordered = int(input(""))
@@ -204,7 +214,7 @@ def menu_virtual():
             print ("Please enter either 1 or 2:")
 
     # choose options from menu
-    print ("** Enter the following commission you want by entering its following number from the menu: **")
+    print ("** Enter your",num_ordered,"commission(s) by entering its following number from the menu: **")
     for item in range(num_ordered):
         if num_ordered > 0  :
             while True:
@@ -217,7 +227,7 @@ def menu_virtual():
                 except ValueError:
                     print ("That is not a valid number.")
                     print ("Please enter a number between 1-8.")
-            commissions_ordered = commissions_ordered -1
+            commissions_ordered = commissions_ordered -1 #Count down until all pizzas are ordered
             order_list.append(virtual_options[commissions_ordered])
             order_cost.append(virtual_prices[commissions_ordered])
             print("{} ${:.2f}" .format(virtual_options[commissions_ordered],virtual_prices[commissions_ordered])) #Count down until all pizzas are ordered
@@ -235,19 +245,20 @@ def menu_physical():
     print("** If you do not, enter 1. If you do, enter 2: **")
     num_ordered = 0
 
+# choose option of one or two orders - min 1, max 2
     while True:
         try:
             num_ordered = int(input(""))
             if num_ordered >= 1 and num_ordered <= 2:
                 break
             else:
-                print("Im sorry, your amount of commissions is limited to 2.")
+                print("Im sorry, your amount of commissions is only limited to 2.")
         except ValueError:
             print ("That is not a valid number.")
             print ("Please enter either 1 or 2:")
 
     # choose options from menu
-    print ("** Enter the following commission you want by entering its following number from the menu: **")
+    print ("** Enter your",num_ordered,"commission(s) by entering its following number from the menu: **")
     for item in range(num_ordered):
         if num_ordered > 0  :
             while True:
@@ -260,33 +271,42 @@ def menu_physical():
                 except ValueError:
                     print ("That is not a valid number.")
                     print ("Please enter a number between 1-8.")
-            commissions_ordered = commissions_ordered -1
+            commissions_ordered = commissions_ordered -1 #Count down until all pizzas are ordered
             order_list.append(physical_options[commissions_ordered])
             order_cost.append(physical_prices[commissions_ordered])
             print("{} ${:.2f}" .format(physical_options[commissions_ordered],physical_prices[commissions_ordered]))
             num_ordered = num_ordered - 1          
 
-#Count down until all pizzas are ordered
-
-#print order
-print(order_list)
-print(order_cost)
-            
-
-# choose option of one or two orders - min 1, max 2
-
-
-# commission order - from menu - print options over
-
-
 # print order out - including if order is del or pickup and names and price of each pizza - total cost including any delivery charge
-
+def print_order(p_v):
+    total_cost = sum(order_cost)
+    print()
+    print("----------------------------------")
+    print("* Customer Details")
+    if p_v == "physical":
+        print(f"Customer Name: {customer_details['name']} \nCustomer Phone: {customer_details['phone']} \nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}, {customer_details['region']} {customer_details['postcode']}")
+        print()
+        print("You are ordering a physical copy.")
+    elif p_v == "virtual":
+        print(f"Customer Name: {customer_details['name']} \nCustomer Phone: {customer_details['phone']} \nCustomer Email: {customer_details['email']}")
+        print()
+        print("You are ordering a virtual copy.")
+    print()
+    print("** Order Details")
+    count = 0
+    for item in order_list:
+        print("Ordered: {}, ${:.2f}".format(item, order_cost[count]))
+        count = count  +1
+    print()
+    print("*** Order Cost Details")
+    print(f"Your total cost is ${total_cost:.2f}")
+    print("----------------------------------")
+    print()
 
 # ability to cancel or proceed with order
 
 
 # option for new order only if cancelled or exit
-
 
 # main function
 def main():
@@ -296,6 +316,8 @@ def main():
     Returns: none
     """
     welcome()
-    y_or_n()
+    p_v = order_type()
+    menu(p_v)
+    print_order(p_v)
 
 main()
