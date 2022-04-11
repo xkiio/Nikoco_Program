@@ -282,17 +282,16 @@ def print_order(p_v):
     total_cost = sum(order_cost)
     print()
     print("----------------------------------")
-    print("* Customer Details")
+    print("* Your Details")
     if p_v == "physical":
         print(f"Customer Name: {customer_details['name']} \nCustomer Phone: {customer_details['phone']} \nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}, {customer_details['region']} {customer_details['postcode']}")
-        print()
-        print("You are ordering a physical copy.")
+        print("You are ordering a physical copy- \nadditional shipping fee of $7.00")
+        total_cost = total_cost + 7
     elif p_v == "virtual":
         print(f"Customer Name: {customer_details['name']} \nCustomer Phone: {customer_details['phone']} \nCustomer Email: {customer_details['email']}")
-        print()
         print("You are ordering a virtual copy.")
     print()
-    print("** Order Details")
+    print("** Your Order Details")
     count = 0
     for item in order_list:
         print("Ordered: {}, ${:.2f}".format(item, order_cost[count]))
