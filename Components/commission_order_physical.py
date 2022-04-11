@@ -1,21 +1,21 @@
-# virtual commissions
-virtual_options = ['Landscape Layout','Portrait (Full body)','Portrait (Half body)','Square Canvas/Album Cover','Wallpaper- Laptop/Tablet','Wallpaper- Iphone','Character Design Ref','Profile Picture',]
-# list of virtual prices
-virtual_prices = [150, 100, 80, 60, 50, 50, 30, 10]
+# physical commissions
+physical_options = ['Landscape Layout','Poster Style','Portrait (Full body)','Portrait (Half body)','Square Canvas/Album Cover','Character Design Collage','Iphone Case','Sticker Designs (x5)',]
+# list of physical prices
+physical_prices = [150, 130, 100, 80, 60, 35, 15, 10]
 
-#list to store ordered options
+# list to store ordered options
 order_list = []
-#list to store option's prices
+# list to store option's prices
 order_cost = []
 
-#list to store order cost
-def menu_virtual():
+
+def menu_physical():
     number_ordered = 8
 
     for count in range(number_ordered) :
-        print("{} {} ${:.2f}" .format(count+1, virtual_options[count],virtual_prices[count]))
+        print("{} {} ${:.2f}" .format(count+1, physical_options[count],physical_prices[count]))
 
-menu_virtual()
+menu_physical()
 print("")
 
 # ask if user wishes to create another order.
@@ -49,10 +49,11 @@ for item in range(num_ordered):
                 print ("That is not a valid number.")
                 print ("Please enter a number between 1-8.")
         commissions_ordered = commissions_ordered -1
-        order_list.append(virtual_options[commissions_ordered])
-        order_cost.append(virtual_prices[commissions_ordered])
-        print("{} ${:.2f}" .format(virtual_options[commissions_ordered],virtual_prices[commissions_ordered]))
+        order_list.append(physical_options[commissions_ordered])
+        order_cost.append(physical_prices[commissions_ordered])
+        print("{} ${:.2f}" .format(physical_options[commissions_ordered],physical_prices[commissions_ordered]))
         num_ordered = num_ordered - 1          
+
 
 #Count down until all pizzas are ordered
 
@@ -60,7 +61,3 @@ for item in range(num_ordered):
 print(order_list)
 print(order_cost)
             
-
-
-
-
