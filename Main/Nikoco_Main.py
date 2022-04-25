@@ -71,9 +71,9 @@ def y_or_n():
                 break #sends user to continue main function process
             elif inp == "n": # if input entered is n sends user to n function
                 n()
-            else: # if input is invalided that is not y or n prints error message and loops
+            else: # if input is invalid that is not y or n prints error message and loops
                 print("Please enter either 'y' for yes, or 'n' for no.")
-        except ValueError:
+        except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
             print("That is not a valid answer.")
             print("Please enter either 'y' for yes, or 'n' for no.")
 
@@ -148,7 +148,7 @@ def virtual_info():
     question = ("Email address: ") # asks for email address
     customer_details['email'] = not_blank(question)
     #print(customer_details['email'])
-    print("")
+    print()
 
 # physical_info function - house address and phone
 def physical_info():
@@ -181,37 +181,78 @@ def physical_info():
     question = ("Postcode: ")
     customer_details['postcode'] = not_blank(question)
     #print(customer_details['postcode'])
-    print("")
+    print()
 
-def menu(p_v):
-    if p_v == "virtual":
-        menu_virtual()
-    if p_v == "physical":
-        menu_physical()
+def detail_confirm(p_v):
+    print ("** Please confirm your details... **")
+    print ("To confirm, please enter '1' ")
+    print ("To try again, please enter '2' ")
+    while True:
+        try:
+            detail = int(input("Please enter a number: "))
+            if detail >= 1 and detail <=2:
+                if detail == 1:
+                    print ("Details Confirmed.")
+                    print ()
+                    break
+                elif detail == 2:
+                    print ("Details Cancelled.")
+                    print ()
+                    if p_v == "virtual":
+                        virtual_info()
+                        detail_confirm(p_v)
+                    if p_v == "physical":
+                        physical_info()
+                        detail_confirm(p_v)
+                    break
+            else: # if input is invalid that is not 1 or 2 prints error message and loops
+                print ("The number must be either 1 or 2.")
+        except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
+            print ("That is not a valid number.")
+            print ("Please enter either 1 or 2.")
 
-# nikoco commission menu - virtual
-def menu_virtual():
-    number_options = 8
-    for count in range(number_options) :
-        print("{} {} ${:.2f}" .format(count+1, virtual_options[count],virtual_prices[count]))
-    print("")
+def second_order():
     # ask if user wishes to create another order.
     print("** Do you also wish to make a second commission? **")
     print("** Making another commission will prolong the time the order takes to be delivered to you. **")
     print("** If you do not, enter 1. If you do, enter 2: **")
     num_ordered = 0
-
+    order_limit = 0
 # choose option of one or two orders - min 1, max 2
     while True:
         try:
             num_ordered = int(input(""))
             if num_ordered >= 1 and num_ordered <= 2:
-                break
-            else:
-                print("Im sorry, your amount of commissions is limited to 2.")
-        except ValueError:
+                if num_ordered == 1:
+                    num_ordered = 1
+                    order_limit = 1
+                    break
+                if num_ordered == 2:
+                    num_ordered = 2
+                    order_limit = 2
+                    break
+            else: # if input is invalid that is not equal to 1 or 2 prints error message and loops
+                    print("Im sorry, your amount of commissions is limited to 2.")
+                    print("Please enter either 1 or 2:")
+        except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
             print ("That is not a valid number.")
-            print ("Please enter either 1 or 2:")
+            print ("Please enter either 1 or 2:")  
+    return order_limit
+
+def menu(p_v,order_limit):
+    if p_v == "virtual":
+        menu_virtual(order_limit)
+    if p_v == "physical":
+        menu_physical(order_limit) 
+
+# nikoco commission menu - virtual
+def menu_virtual(order_limit):
+    num_ordered = order_limit
+    number_options = 8
+    print()
+    for count in range(number_options) :
+        print("{} {} ${:.2f}" .format(count+1, virtual_options[count],virtual_prices[count]))
+    print("")
 
     # choose options from menu
     print ("** Enter your",num_ordered,"commission(s) by entering its following number from the menu: **")
@@ -222,40 +263,25 @@ def menu_virtual():
                     commissions_ordered = int(input(""))
                     if commissions_ordered >=1 and commissions_ordered <=8:
                         break
-                    else:
+                    else: # if input is invalid that is not 1-8 prints error message and loops
                         print ("Your order must be chosen out of the 8 options- please enter a number between 1-8: ")
-                except ValueError:
+                except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
                     print ("That is not a valid number.")
                     print ("Please enter a number between 1-8.")
             commissions_ordered = commissions_ordered -1 #Count down until all pizzas are ordered
             order_list.append(virtual_options[commissions_ordered])
             order_cost.append(virtual_prices[commissions_ordered])
             print("{} ${:.2f}" .format(virtual_options[commissions_ordered],virtual_prices[commissions_ordered])) #Count down until all pizzas are ordered
-            num_ordered = num_ordered - 1          
+            num_ordered = num_ordered - 1       
 
 # nikoco commission menu - physical
-def menu_physical():
+def menu_physical(order_limit):
+    num_ordered = order_limit
     number_options = 8
+    print()
     for count in range(number_options) :
         print("{} {} ${:.2f}" .format(count+1, physical_options[count],physical_prices[count]))
     print("")        
-    # ask if user wishes to create another order.
-    print("** Do you also wish to make a second commission? **")
-    print("** Making another commission will prolong the time the order takes to be delivered to you. **")
-    print("** If you do not, enter 1. If you do, enter 2: **")
-    num_ordered = 0
-
-# choose option of one or two orders - min 1, max 2
-    while True:
-        try:
-            num_ordered = int(input(""))
-            if num_ordered >= 1 and num_ordered <= 2:
-                break
-            else:
-                print("Im sorry, your amount of commissions is only limited to 2.")
-        except ValueError:
-            print ("That is not a valid number.")
-            print ("Please enter either 1 or 2:")
 
     # choose options from menu
     print ("** Enter your",num_ordered,"commission(s) by entering its following number from the menu: **")
@@ -268,7 +294,7 @@ def menu_physical():
                         break
                     else:
                         print ("Your order must be chosen out of the 8 options- please enter a number between 1-8: ")
-                except ValueError:
+                except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
                     print ("That is not a valid number.")
                     print ("Please enter a number between 1-8.")
             commissions_ordered = commissions_ordered -1 #Count down until all pizzas are ordered
@@ -276,7 +302,7 @@ def menu_physical():
             order_cost.append(physical_prices[commissions_ordered])
             print("{} ${:.2f}" .format(physical_options[commissions_ordered],physical_prices[commissions_ordered]))
             num_ordered = num_ordered - 1          
-
+        
 # print order out - including if order is del or pickup and names and price of each pizza - total cost including any delivery charge
 def print_order(p_v):
     total_cost = sum(order_cost)
@@ -302,6 +328,31 @@ def print_order(p_v):
     print("----------------------------------")
     print()
 
+def order_confirm(p_v):
+    print ("** Please confirm your order... **")
+    print ("To confirm, please enter '1' ")
+    print ("To try again, please enter '2' ")
+    while True:
+        try:
+            confirm = int(input("Please enter a number: "))
+            if confirm >= 1 and confirm <=2:
+                if confirm == 1:
+                    print ("Order Confirmed.")
+                    print ("** Your order has been sent to the artist and is now under review! **")
+                    print ("** We will contact you as soon as possible when your order has been accepted. **")
+                    print ("** Once we have recieved the required information about your order, we shall begin the process ^^ **")
+                    break
+                elif confirm == 2:
+                    print ("Order Cancelled.")
+                    print ("** Your order has been cancelled! **")
+                    print ("** You can restart your order or exit the program. **")
+                    break
+            else: # if input is invalid that is not 1 or 2 prints error message and loops
+                print ("The number must be either 1 or 2.")
+        except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
+            print ("That is not a valid number.")
+            print ("Please enter either 1 or 2.")
+
 # ability to cancel or proceed with order
 
 
@@ -316,7 +367,12 @@ def main():
     """
     welcome()
     p_v = order_type()
-    menu(p_v)
+    detail_confirm(p_v)
+    order_limit = second_order()
+    menu(p_v,order_limit)
     print_order(p_v)
+    order_confirm(p_v)
 
 main()
+
+#ORDER LIMIT SHIT
