@@ -2,6 +2,8 @@
 # Bugs - phone number input allows letters
 #      - name input allows numbers
 
+# importing function class into program - for use of quitting system
+import sys
 # allows program to process a randomized output - for name randomization
 import random
 from random import randint
@@ -55,7 +57,7 @@ def welcome():
     print("")
     print("There are conditions as to what the artist can and cannot draw for you:")
     print(" - Cannot draw mecha (heavily detailed pieces) \n - Cannot draw surrealistic/unrealistic portraits \n - Cannot draw anything depictive of offensive or hateful content")
-    print(" - Twos orders maximum for one user regardless of work size")
+    print(" - Twos orders maximum under one user's name regardless of work size")
     print(" Orders that break the following conditions will be refunded.")
     print("")
     y_or_n()
@@ -94,7 +96,7 @@ def n():
                 elif restart == 2: # if input is 2 aborts program and prints farewell message
                     print ("** Have a good day! **")
                     print ("")
-                    quit()
+                    sys.exit()
             else: # if input is outside boundary that is lower than 1 or higher than 2 prints error message
                 print ("The number must be 1 or 2. ")
         except ValueError: # if input is left blank or invalid character prints error message
@@ -119,7 +121,7 @@ def order_type():
                     virtual_info()
                     p_v = "virtual"
                     break
-                elif virtual == 2: # if input is 2 follows physical order function
+                elif virtual == 2: # if input is 2 follows physical order function (NOT virtual function)
                     print ("")
                     print ("** For a physical delivery, we would like your name, phone number and home address where the final product will be sent! **")
                     print ("** It is important that your details are correct- if you have made a mistake, you can reset your details after full input. **")
@@ -131,7 +133,7 @@ def order_type():
         except ValueError: # if input is blank or an invalid character prints error message
             print ("That is not a valid number.")
             print ("Please enter either 1 or 2.")
-    return p_v
+    return p_v # returns parameter's result back whether physical or virtual
 
 # virtual_info function - name, phone number and email address
 def virtual_info():
@@ -139,15 +141,15 @@ def virtual_info():
     print ("** Please enter the following... **")
     question = ("Name: ") # asks for name
     customer_details['name'] = not_blank(question)
-    #print(customer_details['name'])
+    # print(customer_details['name'])
 
     question = ("Phone number: ") # asks for phone number
     customer_details['phone'] = not_blank(question)
-    #print(customer_details['phone'])
+    # print(customer_details['phone'])
 
     question = ("Email address: ") # asks for email address
     customer_details['email'] = not_blank(question)
-    #print(customer_details['email'])
+    # print(customer_details['email'])
     print()
 
 # physical_info function - house address and phone
@@ -156,31 +158,31 @@ def physical_info():
     print ("** Please enter the following... **")
     question = ("Name: ") # asks for name
     customer_details['name'] = not_blank(question)
-    #print(customer_details['name'])
+    # print(customer_details['name'])
 
     question = ("Phone number: ") # asks for phone number
     customer_details['phone'] = not_blank(question)
-    #print(customer_details['phone'])
+    # print(customer_details['phone'])
 
     question = ("House number: ") # asks for house number
     customer_details['house'] = not_blank(question)
-    #print(customer_details['house'])
+    # print(customer_details['house'])
     
     question = ("Street name: ")
     customer_details['street'] = not_blank(question)
-    #print(customer_details['street'])
+    # print(customer_details['street'])
 
     question = ("Suburb: ")
     customer_details['suburb'] = not_blank(question)
-    #print(customer_details['suburb'])
+    # print(customer_details['suburb'])
 
     question = ("State/city: ")
     customer_details['region'] = not_blank(question)
-    #print(customer_details['region'])
+    # print(customer_details['region'])
 
     question = ("Postcode: ")
     customer_details['postcode'] = not_blank(question)
-    #print(customer_details['postcode'])
+    # print(customer_details['postcode'])
     print()
 
 def detail_confirm(p_v):
@@ -328,10 +330,11 @@ def print_order(p_v):
     print("----------------------------------")
     print()
 
+# cancel or proceed with order
 def order_confirm(p_v):
     print ("** Please confirm your order... **")
     print ("To confirm, please enter '1' ")
-    print ("To try again, please enter '2' ")
+    print ("To cancel, please enter '2' ")
     while True:
         try:
             confirm = int(input("Please enter a number: "))
@@ -339,13 +342,15 @@ def order_confirm(p_v):
                 if confirm == 1:
                     print ("Order Confirmed.")
                     print ("** Your order has been sent to the artist and is now under review! **")
-                    print ("** We will contact you as soon as possible when your order has been accepted. **")
-                    print ("** Once we have recieved the required information about your order, we shall begin the process ^^ **")
+                    print ("** We will contact you as soon as possible once your order has been accepted. **")
+                    print()
+                    new_exit()
                     break
                 elif confirm == 2:
                     print ("Order Cancelled.")
                     print ("** Your order has been cancelled! **")
-                    print ("** You can restart your order or exit the program. **")
+                    print()
+                    new_exit()
                     break
             else: # if input is invalid that is not 1 or 2 prints error message and loops
                 print ("The number must be either 1 or 2.")
@@ -353,10 +358,37 @@ def order_confirm(p_v):
             print ("That is not a valid number.")
             print ("Please enter either 1 or 2.")
 
-# ability to cancel or proceed with order
-
-
 # option for new order only if cancelled or exit
+def new_exit():
+    print ("** Do you wish to start another order or exit? **")
+    print ("** A reminder that making another order must be under the name of a different user, or else this order will be discarded. **")
+    print ("** Unless you had previously cancelled you order, you may use the same details as before with your new order. **")
+    print ()
+    print ("To start another order, please enter '1' ")
+    print ("To exit the program, please enter '2' ")
+    while True:
+        try:
+            confirm = int(input("Please enter a number: "))
+            if confirm >= 1 and confirm <=2:
+                if confirm == 1:
+                    print ("New Order.") 
+                    order_list.clear
+                    order_cost.clear()
+                    customer_details.clear()
+                    break
+                elif confirm == 2:
+                    print ()
+                    print ("** Thank you for taking a look at our Nikoco Commissions, we hope to see you again! **")
+                    print ()
+                    order_list.clear
+                    order_cost.clear()
+                    customer_details.clear()
+                    sys.exit()
+            else: # if input is invalid that is not 1 or 2 prints error message and loops
+                print ("The number must be either 1 or 2.")
+        except ValueError: # if input is invalid that is a foreign character or space prints error message and loops
+            print ("That is not a valid number.")
+            print ("Please enter either 1 or 2.") 
 
 # main function
 def main():
@@ -374,5 +406,3 @@ def main():
     order_confirm(p_v)
 
 main()
-
-#ORDER LIMIT SHIT
