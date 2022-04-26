@@ -202,9 +202,11 @@ def detail_confirm(p_v):
                     print ()
                     if p_v == "virtual":
                         virtual_info()
+                        customer_details.clear
                         detail_confirm(p_v)
                     if p_v == "physical":
                         physical_info()
+                        customer_details.clear
                         detail_confirm(p_v)
                     break
             else: # if input is invalid that is not 1 or 2 prints error message and loops
@@ -371,10 +373,13 @@ def new_exit():
             confirm = int(input("Please enter a number: "))
             if confirm >= 1 and confirm <=2:
                 if confirm == 1:
-                    print ("New Order.") 
+                    print ("Starting new order...") 
+                    print ()
+                    print ("...")
                     order_list.clear
                     order_cost.clear()
                     customer_details.clear()
+                    main()
                     break
                 elif confirm == 2:
                     print ()
