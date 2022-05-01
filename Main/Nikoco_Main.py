@@ -11,9 +11,17 @@ import sys
 import random
 from random import randint
 
+import re
+
 # constants
 LOW = 1
-HIGH = 2    
+HIGH = 2
+PH_LOW = 7
+PH_HIGH = 15
+HOUSE_LOW = 1
+HOUSE_HIGH = 6
+POST_LOW = 4
+POST_HIGH = 10
 
 # list of names working in business
 names = ["Andy", "Hunter", "Joyce", "Mengying", "Pup", "Bandi", "Yuki", "Niko"]
@@ -60,11 +68,12 @@ def not_blank(question):
             # if input is invalid prints error message
             print("This cannot be blank.")
 
+
 def check_string(question):
     while True:
         response = input(question)
         x = response.isalpha()
-        if x == False:
+        if not x:
             print("Input must only contain letters.")
         else:
             return response.title()
@@ -91,9 +100,52 @@ def val_int(low, high, question):
             print ("Please enter a number that is either", low, "or", high)
 
 
+def check_int(question, PH_LOW, PH_HIGH):
+    while True:
+        try:
+            num = int(input(question))
+            test_num = num
+            count = 0
+            while test_num > 0:
+                test_num = test_num//10
+                count = count + 1
+            if count >= PH_LOW and count <= PH_HIGH:
+                return str(num)
+            else:
+                if PH_LOW == HOUSE_LOW and PH_HIGH == HOUSE_HIGH:
+                    print("House numbers are limited between", HOUSE_LOW,
+                          "and", HOUSE_HIGH, "digits.")
+                elif PH_LOW == POST_LOW and PH_HIGH == POST_HIGH:
+                    print("Postcodes are limited between", POST_LOW,
+                          "and", POST_HIGH, "digits.")
+                elif PH_LOW == PH_LOW and PH_HIGH == PH_HIGH:
+                    print("Phone numbers are limited between", PH_LOW,
+                          "and", PH_HIGH, "digits.")
+        except ValueError:
+            if PH_LOW == HOUSE_LOW and PH_HIGH == HOUSE_HIGH:
+                print("Please enter your house number.")
+            elif PH_LOW == POST_LOW and PH_HIGH == POST_HIGH:
+                print("Please enter your postcode- "
+                      "hyphens and spaces are not necessary.")
+            elif PH_LOW == PH_LOW and PH_HIGH == PH_HIGH:
+                print("Please enter your phone number- "
+                      "hyphens and spaces are not necessary.")
+
+
+def solve(question):
+    while True:
+        require = input(question)
+        pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,2}$"
+        if re.match(pat, require):
+            break
+        else:
+            print("Please make sure that your email is correct, "
+                  "and has inlcuded an '@' and a '.'")
+
+
 def exit():
         print ()
-        print ("** Thank you for using our Nikoco Commissions"
+        print ("** Thank you for using our Nikoco Commissions "
                "Program! We hope to see you again! **")
         print ()
         order_list.clear()
@@ -227,18 +279,19 @@ def virtual_info():
 
     question = ("Phone number: ")
     # asks for phone number
-    customer_details['phone'] = not_blank(question)
+    customer_details['phone'] = check_int(question, PH_LOW, PH_HIGH)
     # print(customer_details['phone'])
 
     question = ("Email address: ")
     # asks for email address
-    customer_details['email'] = not_blank(question)
+    customer_details['email'] = solve(question)
     # print(customer_details['email'])
     print()
 
 
 # physical_info function - house address and phone
 def physical_info():
+
     # basic instructions
     print ("** Please enter the following... **")
     question = ("Name: ")
@@ -248,12 +301,12 @@ def physical_info():
 
     question = ("Phone number: ")
     # asks for phone number
-    customer_details['phone'] = not_blank(question)
+    customer_details['phone'] = check_int(question, PH_LOW, PH_HIGH)
     # print(customer_details['phone'])
 
     question = ("House number: ")
     # asks for house number
-    customer_details['house'] = not_blank(question)
+    customer_details['house'] = check_int(question, HOUSE_LOW, HOUSE_HIGH)
     # print(customer_details['house'])
 
     question = ("Street name: ")
@@ -273,7 +326,7 @@ def physical_info():
 
     question = ("Postcode: ")
     # asks for postcode
-    customer_details['postcode'] = not_blank(question)
+    customer_details['postcode'] = check_int(question, POST_LOW, POST_HIGH)
     # print(customer_details['postcode'])
     print()
 
