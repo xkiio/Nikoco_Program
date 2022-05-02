@@ -95,6 +95,29 @@ def check_string(question):
             return response.title()
 
 
+# validates name input so that second names
+# or surnames are allowed.
+def check_name(question):
+    # sets up loop
+    while True:
+        # asks for input(string)
+        # adds a whitespace automatically
+        string = input(question) + (" ")
+        # string must contain at least one alpha and space
+        if (any(x.isalpha() for x in string) and
+            any(x.isspace() for x in string) and
+            # string should only be limited to alpha and space-
+            # no other characters
+            all(x.isalpha() or
+                x.isspace() for x in string)):
+            # stores name string input
+            return string.title()
+        # if input does not meet following requirements
+        # prints error message
+        else:
+            print ("Input must only contain letters.")
+
+
 # validates inputs to check if they are an integer.
 # takes question, low and high as a parameter
 def val_int(low, high, question):
@@ -282,7 +305,10 @@ def n():
     # asks for input(string) - indentifies question variable
     question = ("")
     # prints instructions whether user wishes to restart or exit
-    print("")
+    print ()
+    print("==========================="
+          "======================================")
+    print ()
     print("** I'm sorry, you must agree to these terms "
           "in order to commission the artist. **")
     print("** If you wish to restart the program, type 1 **")
@@ -293,6 +319,9 @@ def n():
     # asks for input
     if restart == 1:
         # if input is 1 sends user to reboot
+        print ()
+        print("================================="
+              "================================")
         print ()
         print ("Restarting program...")
         main()
@@ -309,6 +338,9 @@ def order_type():
     p_v = ""
     question = ("")
     # prints instructions
+    print ()
+    print("================================="
+          "================================")
     print("")
     print ("** Do you want your order to be of virtual or physical use? **")
     print ("** For a virtual copy, enter '1' **")
@@ -319,7 +351,10 @@ def order_type():
     # if input is 1 follows virtual order function
     if virtual == 1:
         # prints virtual delivery instructions
-        print ("")
+        print ()
+        print("================================="
+              "================================")
+        print ()
         print ("** For a virtual delivery, we would like your name, "
                "phone number, and email address where the final "
                "product will be sent! **")
@@ -333,7 +368,10 @@ def order_type():
     # if input is 2 follows physical order function (NOT virtual function)
     else:
         # prints physical delivery instructions
-        print ("")
+        print()
+        print("================================="
+              "================================")
+        print()
         print ("** For a physical delivery, we would like your "
                "name, phone number "
                "and home address where the final product will be sent! **")
@@ -356,7 +394,7 @@ def virtual_info():
     # asks for name
     question = ("Name: ")
     # stores customer_details name with check_string function
-    customer_details['name'] = check_string(question)
+    customer_details['name'] = check_name(question)
 
     # asks for phone number
     question = ("Phone number: ")
@@ -379,7 +417,7 @@ def physical_info():
     # asks for name
     question = ("Name: ")
     # stores customer_details name with check_string function
-    customer_details['name'] = check_string(question)
+    customer_details['name'] = check_name(question)
 
     # asks for phone number
     question = ("Phone number: ")
@@ -429,9 +467,15 @@ def detail_confirm(p_v):
     # if input detail is 1 prints confirmation message
     if detail == 1:
         print ("Details Confirmed.")
+        print ()
+        print("================================="
+              "================================")
     # if input detail is 2 prints cancelled message
     else:
         print ("Details Cancelled.")
+        print ()
+        print("================================="
+              "================================")
         print ()
         # if user chose virtual from order_type function
         # clears previous customer_details
@@ -544,6 +588,9 @@ def print_order(p_v):
     total_cost = sum(order_cost)
     # prints customer details, order details and order cost details
     print()
+    print("================================="
+          "================================")
+    print()
     print("----------------------------------")
     print("* Your Details")
     # exclusive only if user chose physical from order_type function
@@ -598,6 +645,9 @@ def order_confirm():
     # if confirm variable is equal to 1 prints confirmation message
     if confirm == 1:
         print ()
+        print("================================="
+              "================================")
+        print ()
         print ("Order Confirmed.")
         print ("** Your order has been sent to the artist "
                "and is now under review! **")
@@ -608,6 +658,9 @@ def order_confirm():
         new_exit()
     # if confirm variable is else (therefore 2) prints cancel message
     else:
+        print ()
+        print("================================="
+              "================================")
         print ()
         print ("Order Cancelled.")
         print ("** Your order has been cancelled! **")
@@ -635,6 +688,9 @@ def new_exit():
     confirm = val_int(LOW, HIGH, question)
     # if confirm variable is equal to 1 prints new order message
     if confirm == 1:
+        print ()
+        print("================================="
+              "================================")
         print ("Starting new order...")
         print ()
         print ("...")
@@ -647,6 +703,9 @@ def new_exit():
         main()
     # if confirm variable is else (therefore 2) sends user to exit function
     else:
+        print ()
+        print("================================="
+              "================================")
         exit()
 
 
